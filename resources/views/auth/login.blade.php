@@ -2,47 +2,34 @@
 
 @section('app-content')
 
-    <div class="form-small">
+<div class="row">
+		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+			<div class="login-panel panel panel-default">
+				<div class="panel-heading">Please Log in</div>
+				<div class="panel-body">
+					<form role="form" method="POST" action="/login">
+            {{ csrf_field() }}
+						<fieldset>
+							<div class="form-group">
+                <input class="form-control" type="email" name="email" placeholder="E-mail" value="{{ old('email') }}" autofocus="">
+							</div>
+							<div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="Password" id="password">
+							</div>
+							<div class="checkbox">
+								<label>
+									<input name="remember" type="checkbox" value="Remember Me">Remember Me
+								</label>
+							</div>
+              <button class="btn btn-primary" type="submit">Login</button>
+              <a class="btn btn-link" href="/password/reset">Forgot Password</a>
+              <a class="btn raw100 btn-success pull-right" href="/register">Register</a>
+            </fieldset>
+					</form>
+				</div>
+			</div>
+		</div><!-- /.col-->
+	</div><!-- /.row -->
 
-        <h2 class="text-center">Please sign in</h2>
-
-        <form method="POST" action="/login">
-            {!! csrf_field() !!}
-            <div class="row">
-                <div class="col-md-12 raw-margin-top-24">
-                    <label>Email</label>
-                    <input class="form-control" type="email" name="email" placeholder="Email" value="{{ old('email') }}">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 raw-margin-top-24">
-                    <label>Password</label>
-                    <input class="form-control" type="password" name="password" placeholder="Password" id="password">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 raw-margin-top-24">
-                    <label>
-                        Remember Me <input type="checkbox" name="remember">
-                    </label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 raw-margin-top-24">
-                    <div class="btn-toolbar justify-content-between">
-                        <button class="btn btn-primary" type="submit">Login</button>
-                        <a class="btn btn-link" href="/password/reset">Forgot Password</a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 raw-margin-top-24">
-                    <a class="btn raw100 btn-info" href="/register">Register</a>
-                </div>
-            </div>
-        </form>
-
-    </div>
 
 @stop
-

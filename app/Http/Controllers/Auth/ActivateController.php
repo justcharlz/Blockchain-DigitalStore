@@ -47,6 +47,7 @@ class ActivateController extends Controller
     public function activate($token)
     {
         if ($this->service->activateUser($token)) {
+          $this->service->activateUser($token);
             return redirect('dashboard')->with('message', 'Your account was activated');
         }
 

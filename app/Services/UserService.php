@@ -137,7 +137,7 @@ class UserService
     public function findByActivationToken($token)
     {
         $userMeta = $this->userMeta->where('activation_token', $token)->first();
-
+        
         if ($userMeta) {
             return $userMeta->user()->first();
         }

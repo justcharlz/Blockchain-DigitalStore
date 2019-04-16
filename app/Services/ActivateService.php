@@ -49,7 +49,7 @@ class ActivateService
     public function activateUser($token)
     {
         $user = $this->userService->findByActivationToken($token);
-
+        
         if ($user) {
             return $user->meta->update([
                 'is_active' => true,
