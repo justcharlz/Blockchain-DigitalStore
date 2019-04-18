@@ -1,13 +1,17 @@
 @extends('layouts.master')
 
 @section('app-content')
-
+<div class="row">
+		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+			<div class="login-panel panel panel-default">
+        <div class="panel-heading text-center">Register</div>
+      <div class="panel-body">
         <div class="form-small">
 
-        <h2 class="text-center">Register</h2>
+
 
         <form method="POST" action="/register">
-            {!! csrf_field() !!}
+            {{csrf_field()}}
             <div class="row">
                 <div class="col-md-12 raw-margin-top-24">
                     <label>Name</label>
@@ -41,7 +45,11 @@
                 </div>
             </div>
         </form>
-
+      </div>
     </div>
+    </div>
+  </div>
+</div>
+</div>
 
 @stop

@@ -52,6 +52,15 @@ Route::group(['middleware' => ['auth']], function () {
 
 /*
 |--------------------------------------------------------------------------
+| Wallet Create and Store
+|--------------------------------------------------------------------------
+*/
+Route::get('wallet', 'WalletController@index');
+Route::get('wallet/create', 'WalletController@create');
+
+
+/*
+|--------------------------------------------------------------------------
 | Authenticated Routes
 |--------------------------------------------------------------------------
 */
@@ -92,7 +101,8 @@ Route::group(['middleware' => ['auth', 'active']], function () {
     |--------------------------------------------------------------------------
     */
     Route::get('/stores', 'StoresController@index');
-    Route::post('/stores', 'StoresController@create');
+    Route::post('/stores', 'StoresController@store');
+    Route::get('/stores/create', 'StoresController@create');
 
     /*
     |--------------------------------------------------------------------------

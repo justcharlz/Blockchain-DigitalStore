@@ -29,14 +29,14 @@
 				<em class="fa fa-music">&nbsp;</em> Beat Store <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
 				<ul class="children collapse nav-item @if(Request::is('stores', 'stores/*')) active @endif" id="sub-item-1">
-					<li><a class="nav-link" href="{!! url('/stores') !!}"><span class="fas fa-cloud">&nbsp;</span> Upload Beat</a></li>
-					<li><a class="nav-link" href="{!! url('user/password') !!}">
+					<li><a class="nav-link" href="{!! url('stores/create') !!}"><span class="fas fa-cloud">&nbsp;</span> Upload Beat</a></li>
+					<li><a class="nav-link" href="{!! url('stores') !!}">
 						<span class="fa fa-shopping-cart">&nbsp;</span> My Store
 					</a></li>
 				</ul>
 			</li>
-      <li class="nav-item @if(Request::is('marketplace', 'marketplace/*')) active @endif">
-        <a class="nav-link" href="{!! url('/marketplace') !!}">
+      <li class="nav-item @if(Request::is('wallet', 'wallet/*')) active @endif">
+        <a class="nav-link" href="{!! url('/wallet') !!}">
         <i class="fas fa-wallet">&nbsp;</i> Decent Wallet
       </a>
     </li>

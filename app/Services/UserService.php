@@ -137,7 +137,7 @@ class UserService
     public function findByActivationToken($token)
     {
         $userMeta = $this->userMeta->where('activation_token', $token)->first();
-        
+
         if ($userMeta) {
             return $userMeta->user()->first();
         }
@@ -173,6 +173,7 @@ class UserService
 
             return $user;
         } catch (Exception $e) {
+          //echo $e->getMessage();
             throw new Exception("We were unable to generate your profile, please try again later.", 1);
         }
     }
