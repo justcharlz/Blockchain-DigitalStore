@@ -8,6 +8,7 @@
 {{ csrf_field() }}
 <fieldset>
 <div class="form-group">
+  @input_maker_label('Beat Image')
   @input_maker_create('cover', ['type' => 'file' ])
 </div>
 <div class="form-group">
@@ -26,6 +27,7 @@
   @input_maker_create('beat_price', ['type' => 'integer', 'placeholder' => 'Cost'])
 </div>
 <div class="form-group">
+  @input_maker_label('Beat File')
   @input_maker_create('beat', ['type' => 'file'])
 </div>
 <!-- Form actions -->

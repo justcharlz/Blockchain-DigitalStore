@@ -19,7 +19,10 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', 'PagesController@home');
+Route::get('/', 'PagesController@home')->name('home');
+Route::get('/about', 'PagesController@about')->name('about');
+Route::get('/marketplace', 'StoresController@marketplace')->name('marketplace');
+Route::get('/details/{store}', 'StoresController@detail');
 
 /*
 |--------------------------------------------------------------------------
@@ -97,12 +100,18 @@ Route::group(['middleware' => ['auth', 'active']], function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Member Activities
+    | Store/MarketPlace Activities
     |--------------------------------------------------------------------------
     */
-    Route::get('/stores', 'StoresController@index');
+    Route::resource('stores', 'StoresController');
+    /*Route::get('/stores', 'StoresController@index');
     Route::post('/stores', 'StoresController@store');
     Route::get('/stores/create', 'StoresController@create');
+    Route::get('/stores/{store}', 'StoresController@show');
+    Route::get('/stores/{store}/edit', 'StoresController@edit');
+    Route::patch('/stores/{store}', 'StoresController@update');
+    Route::delete('/stores/{store}/destroy', 'StoresController@destroy');*/
+
 
     /*
     |--------------------------------------------------------------------------

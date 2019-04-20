@@ -29,6 +29,9 @@
 				<em class="fa fa-music">&nbsp;</em> Beat Store <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
 				<ul class="children collapse nav-item @if(Request::is('stores', 'stores/*')) active @endif" id="sub-item-1">
+					<li><a class="nav-link" href="{!! url('stores') !!}">
+						<span class="fa fa-server">&nbsp;</span> Seeder Node
+					</a></li>
 					<li><a class="nav-link" href="{!! url('stores/create') !!}"><span class="fas fa-cloud">&nbsp;</span> Upload Beat</a></li>
 					<li><a class="nav-link" href="{!! url('stores') !!}">
 						<span class="fa fa-shopping-cart">&nbsp;</span> My Store

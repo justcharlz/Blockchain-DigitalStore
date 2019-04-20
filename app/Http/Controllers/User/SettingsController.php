@@ -41,6 +41,21 @@ class SettingsController extends Controller
      */
     public function update(UserUpdateRequest $request)
     {
+      if(request()->hasfile('pix'))
+      {
+        //cover image
+        $file = Image::make($file)->resize(255, 170)->encode();
+        $filedir = request()->file($file)->store('public/profile');
+        /*$image = Image::make(Storage::get($imagePath))->resize(160,80)->encode();
+        Storage::put($imagePath,$image);
+
+        $imagePath = explode('/',$imagePath);*/
+
+        $imagedir = explode('/', $filedir);
+        $imagedir = 'storage/profile/'.$imagedir[2];
+        $request->pix = $imagedir;
+      }
+
         try {
             if ($this->service->update(auth()->id(), $request->all())) {
                 return back()->with('message', 'Settings updated successfully');

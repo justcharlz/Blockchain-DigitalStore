@@ -10,6 +10,11 @@
                 {!! csrf_field() !!}
 
                 <div>
+                    @input_maker_label('Profile pix')
+                    @input_maker_create('pix', ['type' => 'file'], $user)
+                </div>
+
+                <div>
                     @input_maker_label('Email')
                     @input_maker_create('email', ['type' => 'string'], $user)
                 </div>
