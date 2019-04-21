@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use \App\Stores;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class StoresController extends Controller
 {
@@ -53,9 +54,9 @@ class StoresController extends Controller
       {
         //cover image
         //$file = request()->file('cover');
-        $file = Image::make($file)->resize(255, 170)->encode();
-        $filedir = request()->file($file)->store('public/cover');
 
+        $filedir = request()->file('cover')->store('public/cover');
+        //$file = Image::make($filedir)->resize(255, 170)->save();
          $imagedir = explode('/', $filedir);
          $imagedir = 'storage/cover/'.$imagedir[2];
       }
@@ -162,8 +163,8 @@ class StoresController extends Controller
 
             Storage::delete($imagedir);
             //cover image
-            $file = Image::make($file)->resize(255, 170)->encode();
-            $filedir = request()->file($file)->store('public/cover');
+
+            $filedir = request()->file('cover')->store('public/cover');
 
              $imagedir = explode('/', $filedir);
              $imagedir = 'storage/cover/'.$imagedir[2];
@@ -239,7 +240,7 @@ class StoresController extends Controller
             Storage::delete($beatdir);
 
             if ($result) {
-                return redirect('stores.index')->with('message', 'Successfully deleted');
+                return redirect('/stores')->with('message', 'Successfully deleted');
             }
 
             return back()->with('message', 'Failed to delete');

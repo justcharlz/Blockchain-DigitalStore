@@ -44,8 +44,8 @@ class SettingsController extends Controller
       if(request()->hasfile('pix'))
       {
         //cover image
-        $file = Image::make($file)->resize(255, 170)->encode();
-        $filedir = request()->file($file)->store('public/profile');
+        //$file = Image::make($file)->resize(255, 170);
+        $filedir = request()->file('pix')->store('public/profile');
         /*$image = Image::make(Storage::get($imagePath))->resize(160,80)->encode();
         Storage::put($imagePath,$image);
 

@@ -12,7 +12,7 @@
                     <form method="post" action="{{ url('wallet/create') }}">
                         {!! csrf_field() !!}
 
-                      @form_maker_table("walletname", ['name' => 'string', 'placeholder' => 'Wallet Address'])
+                      @input_maker_create("walletname", ['type' => 'string', 'placeholder' => 'Wallet Address'])
 
                         <div class="raw-margin-top-24">
                             <button class="btn btn-primary pull-left" type="submit">Create Wallet</button>
