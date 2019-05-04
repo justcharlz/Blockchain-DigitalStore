@@ -9,26 +9,26 @@
 <fieldset>
 <div class="form-group">
   @input_maker_label('Beat Image')
-  @input_maker_create('cover', ['type' => 'file' ])
+  @input_maker_create('cover', ['type' => 'file', 'required' ])
 </div>
 <div class="form-group">
-  @input_maker_create('music_genre', ['type' => 'select', 'options' => ['Afrobeat' => 'Afrobeat', 'Calypso' => 'Calypso']])
+  @input_maker_create('music_genre', ['type' => 'select', 'options' => ['Afrobeat' => 'Afrobeat', 'Calypso' => 'Calypso'], 'required'])
 </div>
 <div class="form-group">
-  @input_maker_create('name', ['type' => 'string', 'placeholder' => 'Name of Beat'])
+  @input_maker_create('name', ['type' => 'string', 'placeholder' => 'Name of Beat', 'required'])
 </div>
 <div class="form-group">
-  @input_maker_create('bpm', ['type' => 'integer', 'placeholder' => 'Beat per Minute'])
+  @input_maker_create('bpm', ['type' => 'integer', 'placeholder' => 'Beat per Minute', 'required'])
 </div>
 <div class="form-group">
-  @input_maker_create('length', ['type' => 'integer', 'placeholder' => 'Beat Length'])
+  @input_maker_create('length', ['type' => 'integer', 'placeholder' => 'Beat Length', 'required'])
 </div>
 <div class="form-group">
-  @input_maker_create('beat_price', ['type' => 'integer', 'placeholder' => 'Cost'])
+  @input_maker_create('beat_price', ['type' => 'integer', 'placeholder' => 'Cost', 'required'])
 </div>
 <div class="form-group">
   @input_maker_label('Beat File')
-  @input_maker_create('beat', ['type' => 'file'])
+  @input_maker_create('beat', ['type' => 'file', 'required'])
 </div>
 <!-- Form actions -->
 <div class="form-group">

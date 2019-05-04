@@ -82,14 +82,14 @@ class StoresController extends Controller
         'length',
         'beat_price'])
         +
-        ([
+        [
         'user_id' => auth()->user()->id,
         'cover' => $imagedir,
         'size' => Storage::size($beatdir),
         'type' => Storage::mimeType($beatdir),
         'path' => $beatdir,
         'promoted' => $promoted
-      ]));
+      ]);
 
 
       return redirect()->action('StoresController@create')->with('message','Beat Succefully uploaded to Decent Blockchain!');
@@ -198,14 +198,14 @@ class StoresController extends Controller
             'length',
             'beat_price'])
             +
-            ([
+            [
             'user_id' => auth()->user()->id,
             'cover' => $imagedir,
             'size' => Storage::size($beatdir),
             'type' => Storage::mimeType($beatdir),
             'path' => $beatdir,
             'promoted' => $promoted
-          ])
+          ]
         );
 
 
