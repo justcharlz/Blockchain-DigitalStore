@@ -14,7 +14,7 @@
 <dt>Name</dt><dd>{{ $stores->name}}</dd>
 <dt>Beat per Minute</dt><dd> {{$stores->bpm}}</dd>
 <dt>Length</dt><dd> {{$stores->length}}</dd>
- <dt>Price</dt><dd>${{$stores->beat_price}}|0DCT</dd>
+ <dt>Price</dt><dd>${{$stores->beat_price}}/0DCT</dd>
 </dl>
 
 </div>

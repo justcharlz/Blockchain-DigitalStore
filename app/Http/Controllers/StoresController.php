@@ -74,18 +74,22 @@ class StoresController extends Controller
       }
 
       $store = new Stores();
-      $store->user_id = auth()->user()->id;
-      $store->cover = $imagedir;
-      $store->name = request('name');
-      $store->music_genre = request('music_genre');
-      $store->bpm = request('bpm');
-      $store->length = request('length');
-      $store->beat_price = request('beat_price');
-      $store->size = Storage::size($beatdir);
-      $store->type = Storage::mimeType($beatdir);
-      $store->path = $beatdir;
-      $store->promoted = $promoted;
-      $store->save();
+
+      Stores::create(request([
+        'name',
+        'music_genre',
+        'bpm',
+        'length',
+        'beat_price'])
+        +
+        ([
+        'user_id' => auth()->user()->id,
+        'cover' => $imagedir,
+        'size' => Storage::size($beatdir),
+        'type' => Storage::mimeType($beatdir),
+        'path' => $beatdir,
+        'promoted' => $promoted
+      ]));
 
 
       return redirect()->action('StoresController@create')->with('message','Beat Succefully uploaded to Decent Blockchain!');
@@ -97,14 +101,12 @@ class StoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Stores $store)
     {
 
-      $stores = Stores::find($id);
-      //$stores = Stores::where('id',$id)->where('user_id', auth()->user()->id)->get();
-      if ($stores->user_id == auth()->user()->id)
+      if ($store->user_id == auth()->user()->id)
       {
-        return view('stores.edit')->with('stores', $stores);
+        return view('stores.edit')->with('stores', $store);
       } else {
         return redirect('stores')->with('message','You do not have authorisation');
       }
@@ -119,11 +121,10 @@ class StoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Stores $store)
     {
-        $stores = Stores::find($id);
 
-        return view('stores.show')->with('stores', $stores);
+        return view('stores.show')->with('stores', $store);
     }
 
     /**
@@ -132,11 +133,9 @@ class StoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function detail($id)
+    public function detail(Stores $store)
     {
-        $stores = Stores::find($id);
-
-        return view('stores.detail')->with('stores', $stores);
+        return view('stores.detail')->with('stores', $store);
     }
 
 
@@ -147,10 +146,10 @@ class StoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Stores $store)
     {
         try {
-          $store = Stores::find($id);
+
           //update cover path in db
           if(request()->hasfile('cover')&&
           request()->validate([
@@ -191,19 +190,24 @@ class StoresController extends Controller
           $beatdir = $store->path;
         }
         //dd(request());
+      $result =  $store->update(
+          request([
+            'name',
+            'music_genre',
+            'bpm',
+            'length',
+            'beat_price'])
+            +
+            ([
+            'user_id' => auth()->user()->id,
+            'cover' => $imagedir,
+            'size' => Storage::size($beatdir),
+            'type' => Storage::mimeType($beatdir),
+            'path' => $beatdir,
+            'promoted' => $promoted
+          ])
+        );
 
-          $store->user_id = auth()->user()->id;
-          $store->cover = $imagedir;
-          $store->name = request('name');
-          $store->music_genre = request('music_genre');
-          $store->bpm = request('bpm');
-          $store->length = request('length');
-          $store->beat_price = request('beat_price');
-          $store->size = Storage::size($beatdir);
-          $store->type = Storage::mimeType($beatdir);
-          $store->path = $beatdir;
-          $store->promoted = $store->promoted;
-          $result = $store->save();
 
             if ($result) {
                 return back()->with('message', 'Successfully updated');
@@ -221,13 +225,12 @@ class StoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Stores $stores)
     {
-      $stores = Stores::find($id);
       //dd($stores);
       if ($stores->user_id == auth()->user()->id) {
         try {
-            $result = $stores->delete($id);
+            $result = $stores->delete();
 
             //delete cover image
             $coverdir = explode('/', $stores->cover);
