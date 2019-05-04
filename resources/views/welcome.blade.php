@@ -91,7 +91,7 @@
 
             <div class="content"><i class="fas fa-music"></i>
                 <div class="title m-b-md">
-                    Decent Beats
+                    Arweave Beats
                 </div>
 
                 <div class="display-4">

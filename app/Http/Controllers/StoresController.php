@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
+
 class StoresController extends Controller
 {
 
@@ -73,8 +74,26 @@ class StoresController extends Controller
         $beatdir = request()->file('beat')->store('upload/beats');
       }
 
-      $store = new Stores();
+      //$store = new Stores();
 
+      //send to arweave blockchain
+      //arweave Blockchain
+      $arweave = new \Arweave\SDK\Arweave('http', '209.97.142.169', 1984);
+
+            $jwk = json_decode(Storage::disk('local')->get('jwk.json'), true);
+            $wallet =  new \Arweave\SDK\Support\Wallet($jwk);
+            $transaction = $arweave->createTransaction($wallet, [
+            'data' => $beat,
+            'tags' => [
+                'Content-Type' => 'audio/mpeg'
+            ]
+            ]);
+      //dd('Your transaction ID is %s', $transaction->getAttribute('id'));
+
+      // commit() sends the transaction to the network, once sent this can't be undone.
+            $arweave->commit($transaction);
+
+      //save data to database
       Stores::create(request([
         'name',
         'music_genre',
@@ -90,6 +109,7 @@ class StoresController extends Controller
         'path' => $beatdir,
         'promoted' => $promoted
       ]);
+
 
 
       return redirect()->action('StoresController@create')->with('message','Beat Succefully uploaded to Decent Blockchain!');

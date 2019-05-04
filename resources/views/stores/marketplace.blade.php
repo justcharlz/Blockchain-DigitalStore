@@ -3,11 +3,12 @@
 @section('pageTitle') Marketplace @stop
 
 @section('content')
+<h1>@yield('pageTitle')</h1>
   <div class="row">
 @foreach($stores as $store)
   <div class="col-md-3">
     <div class="panel panel-info">
-      <div class="panel-heading">{{$store->name}} <span class="pull-right"><em>${{ $store->beat_price }} | 0DCT </em></span></div>
+      <div class="panel-heading">{{$store->name}} <span class="pull-right"><em>${{ $store->beat_price }} | 0 AR </em></span></div>
       <div class="panel-body" style="padding:0px">
       <div class="col-md-6"  style="padding:0px">
       <img src=  {{ asset($store->cover) }} class="img-responsive" />
