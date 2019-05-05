@@ -82,16 +82,26 @@ class StoresController extends Controller
 
             $jwk = json_decode(Storage::disk('local')->get('jwk.json'), true);
             $wallet =  new \Arweave\SDK\Support\Wallet($jwk);
+            // $transaction = $arweave->createTransaction($wallet, [
+            // 'data' => $beat,
+            // 'tags' => [
+            //     'Content-Type' => 'audio/mpeg'
+            // ]
+            // ]);
+
             $transaction = $arweave->createTransaction($wallet, [
-            'data' => $beat,
-            'tags' => [
-                'Content-Type' => 'audio/mpeg'
+          'data' => '<html><head><title>Some page</title></head></html>',
+          'tags' => [
+              'Content-Type' => 'text/html'
             ]
-            ]);
-      //dd('Your transaction ID is %s', $transaction->getAttribute('id'));
+          ]);
+
+          // print_r(json_encode($transaction->getAttributes()));
+          //
+          // file_put_contents('transaction.json', json_encode($transaction->getAttributes()));
 
       // commit() sends the transaction to the network, once sent this can't be undone.
-            $arweave->commit($transaction);
+            $arweave->api()->commit($transaction);
 
       //save data to database
       Stores::create(request([
