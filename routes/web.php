@@ -53,14 +53,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('activate/send-token', 'Auth\ActivateController@sendToken');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Wallet Create and Store
-|--------------------------------------------------------------------------
-*/
-Route::get('wallet', 'WalletController@index');
-Route::get('wallet/create', 'WalletController@create');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -111,6 +103,13 @@ Route::group(['middleware' => ['auth', 'active']], function () {
     Route::get('/stores/{store}/edit', 'StoresController@edit');
     Route::patch('/stores/{store}', 'StoresController@update');
     Route::delete('/stores/{store}/destroy', 'StoresController@destroy');*/
+
+    /*
+    |--------------------------------------------------------------------------
+    | Wallet Create and Store
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('wallet', 'WalletController');
 
 
     /*

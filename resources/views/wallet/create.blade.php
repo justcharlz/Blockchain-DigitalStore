@@ -1,18 +1,18 @@
 @extends('dashboard')
 
-@section('pageTitle') Decent Wallet: Create @stop
+@section('pageTitle') Wallet: Create @stop
 
 @section('content')
 
     <div class="row">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-
-                    <form method="post" action="{{ url('wallet/create') }}">
+                <div class="col-md-4">
+                  Wallet Balance:
+                    <form method="post" action="{{ url('wallet') }}">
                         {!! csrf_field() !!}
 
-                      @input_maker_create("walletname", ['type' => 'string', 'placeholder' => 'Wallet Address'])
+                      @input_maker_create("wallet", ['type' => 'string', 'placeholder' => 'Wallet Address'])
 
                         <div class="raw-margin-top-24">
                             <button class="btn btn-primary pull-left" type="submit">Create Wallet</button>
@@ -21,6 +21,12 @@
 
                     </form>
                 </div>
+
+                <div class="col-md-4">
+                  @foreach($wallet as $wallets)
+                  {{$wallets}}
+                  @endforeach
+              </div>
             </div>
         </div>
     </div>

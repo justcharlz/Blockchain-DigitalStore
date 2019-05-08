@@ -104,6 +104,17 @@ class User extends Authenticatable
         return $this->hasMany(Stores::class);
     }
 
+
+    /**
+     * Wallet
+     *
+     * @return Relationship
+     */
+    public function wallets()
+    {
+        return $this->hasMany(Wallets::class);
+    }
+
     /**
      * Team member
      *
