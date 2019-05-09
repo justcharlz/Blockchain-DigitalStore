@@ -6,7 +6,14 @@
 
     <div class="row">
         <div class="col-md-12">
-            <form method="POST" action="/user/settings">
+          <div class="row">
+            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-2 col-md-offset-2">
+
+              <img src= {{ asset($user->pix) }} class="img-responsive" />
+            </div>
+                <div class="col-xs-10 col-sm-8 col-md-4">
+
+            <form method="POST" action="/user/settings" enctype="multipart/form-data">
                 {!! csrf_field() !!}
 
                 <div>
@@ -40,6 +47,8 @@
                     </div>
                 </div>
             </form>
+          </div>
+        </div>
         </div>
     </div>
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \App\Stores;
+use \App\Models\Stores;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -22,7 +22,6 @@ class StoresController extends Controller
 
     public function Index()
     {
-
       $stores = auth()->user()->stores;
 
       return view('stores.index', compact('stores'));

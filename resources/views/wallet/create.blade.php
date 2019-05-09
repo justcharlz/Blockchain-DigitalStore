@@ -1,6 +1,6 @@
 @extends('dashboard')
 
-@section('pageTitle') Wallet: Create @stop
+@section('pageTitle') Wallet: Add @stop
 
 @section('content')
 
@@ -8,6 +8,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-4">
+                  To create a wallet, go to the <a href="{{url('https://arweave.org')}}">arweave</a> website.
                   Wallet Balance:
                     <form method="post" action="{{ url('wallet') }}">
                         {!! csrf_field() !!}
@@ -24,7 +25,7 @@
 
                 <div class="col-md-4">
                   @foreach($wallet as $wallets)
-                  {{$wallets}}
+                  {{$wallets->wallet}}
                   @endforeach
               </div>
             </div>

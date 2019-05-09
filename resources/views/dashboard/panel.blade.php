@@ -1,7 +1,7 @@
 <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<div class="profile-sidebar">
 			<div class="profile-userpic">
-				<img src="http://placehold.it/50/30a5ff/fff" class="img-responsive" alt="">
+				<img src={{ asset(Auth::user()->pix) }} class="img-responsive" alt="">
 			</div>
 			<div class="profile-usertitle">
 				<div class="profile-usertitle-name">{{Auth::user()->name}}</div>
@@ -37,15 +37,15 @@
 				</ul>
 			</li>
       <li class="nav-item @if(Request::is('wallet', 'wallet/*')) active @endif">
-        <a class="nav-link" href="{!! url('/wallet') !!}">
+        <a class="nav-link" href="{!! url('wallet/create') !!}">
         <i class="fas fa-wallet">&nbsp;</i> Arweave Wallet
       </a>
     </li>
-		<!--li class="nav-item @if(Request::is('seeder', 'seeder/*')) active @endif">
-			<a class="nav-link" href="{!! url('/seeder') !!}">
-			<span class="fa fa-server">&nbsp;</span> Seeder Node
+		<li class="nav-item @if(Request::is('node', 'node/*')) active @endif">
+			<a class="nav-link" href="{!! url('/node') !!}">
+			<span class="fa fa-server">&nbsp;</span> Nodes State
 		</a>
-	</li-->
+	</li>
 			<li class="parent "><a data-toggle="collapse" href="#sub-item-2">
 				<em class="fa fa-user">&nbsp;</em> Account Settings <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserUpdateRequest;
+use Intervention\Image\Facades\Image;
 
 class SettingsController extends Controller
 {
@@ -41,6 +42,7 @@ class SettingsController extends Controller
      */
     public function update(UserUpdateRequest $request)
     {
+      $imagedir = '';
       if(request()->hasfile('pix'))
       {
         //cover image
@@ -51,13 +53,16 @@ class SettingsController extends Controller
 
         $imagePath = explode('/',$imagePath);*/
 
-        $imagedir = explode('/', $filedir);
-        $imagedir = 'storage/profile/'.$imagedir[2];
-        $request->pix = $imagedir;
+        $image = explode('/', $filedir);
+        $imagedir = 'storage/profile/'.$image[2];
+        //$request->pix = $imagedir;
       }
 
+        $setting = request(['email','name','bio','meta','roles','_token'])+(['pix' => $imagedir]);
+        //dd($request->all(['pix' => $imagedir]) );
         try {
-            if ($this->service->update(auth()->id(), $request->all())) {
+            if ($this->service->update(auth()->id(), $setting )) {
+
                 return back()->with('message', 'Settings updated successfully');
             }
 

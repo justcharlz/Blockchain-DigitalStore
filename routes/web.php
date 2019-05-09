@@ -92,6 +92,14 @@ Route::group(['middleware' => ['auth', 'active']], function () {
 
     /*
     |--------------------------------------------------------------------------
+    | Node
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('node', 'NodesController');
+
+    /*
+    |--------------------------------------------------------------------------
     | Store/MarketPlace Activities
     |--------------------------------------------------------------------------
     */
@@ -109,7 +117,7 @@ Route::group(['middleware' => ['auth', 'active']], function () {
     | Wallet Create and Store
     |--------------------------------------------------------------------------
     */
-    Route::resource('wallet', 'WalletController');
+    Route::resource('wallet', 'WalletsController');
 
 
     /*
