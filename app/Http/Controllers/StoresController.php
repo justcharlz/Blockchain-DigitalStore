@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \App\Models\Stores;
+use App\Stores;
+use App\Models\Wallets;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -29,15 +30,15 @@ class StoresController extends Controller
 
     public function Create()
     {
-
-      return view('stores.create');
+      $wallet =   auth()->user()->wallets;
+      return view('stores.create', compact('wallet'));
     }
 
     public function Store($promoted = false)
     {
 
 
-      request()->validate([
+        request()->validate([
         'name' => 'required',
         'music_genre' => 'required',
         'bpm' => 'required',
@@ -69,38 +70,36 @@ class StoresController extends Controller
         )
         {
         //beat
-        $beat = request()->file('beat');
+        //$beatdir = request()->file('beat');
         $beatdir = request()->file('beat')->store('upload/beats');
       }
 
-      //$store = new Stores();
-
-      //send to arweave blockchain
-      //arweave Blockchain
       $arweave = new \Arweave\SDK\Arweave('http', '209.97.142.169', 1984);
 
-            $jwk = json_decode(Storage::disk('local')->get('jwk.json'), true);
-            $wallet =  new \Arweave\SDK\Support\Wallet($jwk);
-            // $transaction = $arweave->createTransaction($wallet, [
-            // 'data' => $beat,
-            // 'tags' => [
-            //     'Content-Type' => 'audio/mpeg'
-            // ]
-            // ]);
+      //send to arweave blockchain
 
-            $transaction = $arweave->createTransaction($wallet, [
-          'data' => '<html><head><title>Some page</title></head></html>',
+          $wallet =   auth()->user()->wallets;
+          $jwk = json_decode(Storage::disk('local')->get($wallet->walletkey), true);
+
+          $wallet =  new \Arweave\SDK\Support\Wallet($jwk);
+          $tx = $arweave->createTransaction($wallet, [
+          'data' => $beatdir,
           'tags' => [
-              'Content-Type' => 'text/html'
-            ]
+              'Content-Type' => 'audio/mpeg'
+          ],
+          'quantity' => '0'
           ]);
 
-          // print_r(json_encode($transaction->getAttributes()));
-          //
-          // file_put_contents('transaction.json', json_encode($transaction->getAttributes()));
+
+          $tx->verify();
 
       // commit() sends the transaction to the network, once sent this can't be undone.
-            $arweave->api()->commit($transaction);
+           $arweave->api()->commit($tx);
+
+           sleep(10);
+           //dd($tx->getAttribute('id'));
+          $status = $arweave->api()->getTransactionData($tx->getAttribute('id'));
+
 
       //save data to database
       Stores::create(request([
@@ -111,6 +110,7 @@ class StoresController extends Controller
         'beat_price'])
         +
         [
+        'transactionid' => $tx->getAttribute('id'),
         'user_id' => auth()->user()->id,
         'cover' => $imagedir,
         'size' => Storage::size($beatdir),
@@ -121,7 +121,7 @@ class StoresController extends Controller
 
 
 
-      return redirect()->action('StoresController@create')->with('message','Beat Succefully uploaded to Decent Blockchain!');
+      return redirect()->action('StoresController@create')->with('message','Beat Succefully uploaded to Arweave Blockchain!');
     }
 
     /**
@@ -165,6 +165,66 @@ class StoresController extends Controller
     public function detail(Stores $store)
     {
         return view('stores.detail')->with('stores', $store);
+    }
+
+    /**
+     * checkout.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function checkout(Stores $store)
+    {
+        return view('stores.checkout')->with('stores', $store);
+    }
+
+    /**
+     * Token Transfer.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function tokentransfer(Stores $store)
+    {
+
+      //get buyer's address
+      $buyer = auth()->user()->wallets;
+
+        if ($buyer != null) {
+          //get seller's address
+          $seller = Wallets::where('user_id',$store->user_id)->first();
+
+          //Do the transfer
+                $arweave = new \Arweave\SDK\Arweave('http', '209.97.142.169', 1984);
+          //send to arweave blockchain
+
+              $jwk = json_decode(Storage::disk('local')->get($buyer->walletkey), true);
+
+              $wallet =  new \Arweave\SDK\Support\Wallet($jwk);
+              $tx = $arweave->createTransaction($wallet, [
+              'target' => $seller->wallet,
+              'data' => $store->name,
+              'tags' => [
+                  'Digital Content' => $store->description
+              ],
+              'quantity' => $store->beat_price
+              ]);
+
+              $tx->verify();
+
+              // commit() sends the transaction to the network, once sent this can't be undone.
+                 $arweave->api()->commit($tx);
+
+               sleep(20);
+               //dd($tx->getAttribute('id'));
+              $status = $arweave->api()->getTransactionData($tx->getAttribute('id'));
+              return view('stores.checkout')->with('message', $status)->with('stores', $store);
+        }
+        else {
+          return view('stores.checkout')->with('message', 'Add a Wallet to make a purchase');
+        }
+
+        return view('stores.checkout')->with('stores', $store);
     }
 
 

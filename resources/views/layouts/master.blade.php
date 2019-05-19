@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Decent Beats</title>
+	<title>Store and Sell Digital Contents on the Blockchain</title>
 	<link href="/lumino/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/lumino/css/datepicker3.css" rel="stylesheet">
 	<link href="/lumino/css/styles.css" rel="stylesheet">

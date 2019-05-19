@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DCorePHP\Model\ChainObject;
 use App\Models\Wallets;
+use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Model;
 
 class WalletsController extends Controller
 {
@@ -17,39 +20,58 @@ class WalletsController extends Controller
       }
 
 
-      // public function Create()
-      // {
-      //   $dcoreApi = new \DCorePHP\DCoreApi('https://testnet-api.dcore.io/','wss://testnet-api.dcore.io');
-      //   $brainkey = 'gunl undy imbibe betrail bottler queasom untruly suist wether epipial dablet craw achene dinette communa unbraid';
-      //   $name = 'accountname';
-      //   $accountname = new ChainObject("1.2.35");
-      //   $registrarid = 'DCT5sgksw3bNxQTLMQy5G84or283Padw9xRQpowt9PrgxFzxajNMm';
-      //   $prikey = '5JNvSJebNUu2fsCfc3PzVuCiLQ9iXhtFmNb82JcqocES3jGACjn';
-      //   $broadcast = false;
-      //
-      //   $wallet = $dcoreApi->getAccountApi()->createAccountWithBrainKey( 'dw-charliejustcga', 'dw-charliejustcga',new ChainObject("1.2.35"),$prikey,$broadcast);
-      //
-      //
-      //   echo $wallet;
-      //   return view('wallet.create');
-      // }
-
       public function Create()
       {
+        $wallet;
         $wallet = auth()->user()->wallets;
+        //dd($wallet);
         return view('wallet.create', compact('wallet'));
       }
 
-      public function Store()
+
+      public function Store(Wallets $upwallet)
       {
             request()->validate([
               'wallet' => 'required',
             ]);
 
-            Wallets::create(
-              request(['wallet'])+(['user_id'=>auth()->user()->id])
-            );
+            if(
+            request()->hasfile('walletkey')
+            &&
+            request()->validate(
+              [
+                        'walletkey' => 'required|max:4096',
+                    ]))
+            {
+
+              $walletdir = request()->walletkey->storeAs('wallet', SHA1(microtime('m')).'.json');
+              //dd($filedir);
+              // $filepath = Storage::putFile('wallet', new File($filedir));
+              // //dd($filepath);
+              //  $walletdir = explode('/', $filedir);
+              //  $wallet = 'storage/wallet/'.$walletdir[2];
+            }
+
             $wallet = auth()->user()->wallets;
+//dd(['user_id' =>  auth()->user()->id, 'wallet' => $wallet->walletkey ]);
+            if (isset($wallet->walletkey)) {
+
+                $result = $upwallet->updateOrInsert(
+                  ['user_id' =>  auth()->user()->id ],
+                  ['walletkey' => $walletdir, 'wallet' => request()->wallet]);
+
+            }
+            else {
+              Wallets::create(
+                request(['wallet'])+([
+                  'user_id'=> auth()->user()->id,
+                  'walletkey' => $walletdir
+                ])
+              );
+            }
+
+
+
             return redirect('wallet/create')->with('wallet',$wallet)->with('message','Wallet has been saved');
       }
 }

@@ -8,7 +8,7 @@
 @foreach($stores as $store)
   <div class="col-md-3">
     <div class="panel panel-info">
-      <div class="panel-heading">{{$store->name}} <span class="pull-right"><em>${{ $store->beat_price }} | 0 AR </em></span></div>
+      <div class="panel-heading">{{$store->name}} <span class="pull-right"><em>{{ $store->beat_price }} AR </em></span></div>
       <div class="panel-body" style="padding:0px">
       <div class="col-md-6"  style="padding:0px">
       <img src=  {{ asset($store->cover) }} class="img-responsive" />
@@ -37,8 +37,8 @@
                 <dt>Size</dt>
                 <dd>  {{ number_format($store->size/1000000) }}mb</dd>
             </dl>
-            <a href={{'details/'.$store->id}} class="btn btn-sm btn-info" role="button"><span class="fa fa-eye"></span></a>
-            <button class="btn btn-sm btn-success"><span class="fa fa-shopping-cart"></span> Pay </button>
+            <a href={{'details/'.$store->id}} class="btn btn-sm btn-info" role="button"><span class="fa fa-binoculars"></span></a>
+            <a href={{'checkout/'.$store->id}} class="btn btn-sm btn-success" role="button"><span class="fa fa-shopping-cart"></span> Pay </a>
       </div>
       </div>
     </div>

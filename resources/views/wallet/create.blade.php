@@ -10,13 +10,15 @@
                 <div class="col-md-4">
                   To create a wallet, go to the <a href="{{url('https://arweave.org')}}">arweave</a> website.
                   Wallet Balance:
-                    <form method="post" action="{{ url('wallet') }}">
+                    <form method="post" action="{{ url('wallet') }}" enctype="multipart/form-data" >
                         {!! csrf_field() !!}
 
                       @input_maker_create("wallet", ['type' => 'string', 'placeholder' => 'Wallet Address'])
 
+                      @input_maker_label('Upload WalletKey')
+                      @input_maker_create('walletkey', ['type' => 'file', 'required' ])
                         <div class="raw-margin-top-24">
-                            <button class="btn btn-primary pull-left" type="submit">Create Wallet</button>
+                            <button class="btn btn-primary pull-left" type="submit">Add Wallet</button>
                             <a class="btn btn-secondary pull-right" href="{{ url('wallet') }}">Cancel</a>
                         </div>
 
@@ -24,9 +26,9 @@
                 </div>
 
                 <div class="col-md-4">
-                  @foreach($wallet as $wallets)
-                  {{$wallets->wallet}}
-                  @endforeach
+
+                  {{$wallet->wallet ?? 'No Wallet. Add one'}}
+
               </div>
             </div>
         </div>

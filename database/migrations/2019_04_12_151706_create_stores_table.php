@@ -23,7 +23,7 @@ class CreateStoresTable extends Migration
             $table->integer('bpm');
             $table->integer('length');
             $table->integer('beat_price');
-            //$table->string('store_name');
+            $table->string('transactionid');
             $table->string('path');
             $table->integer('size');
             $table->string('type');

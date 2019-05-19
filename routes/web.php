@@ -104,6 +104,8 @@ Route::group(['middleware' => ['auth', 'active']], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('stores', 'StoresController');
+    Route::get('/checkout/{store}', 'StoresController@checkout');
+    Route::get('/tokentransfer/{store}', 'StoresController@tokentransfer');
     /*Route::get('/stores', 'StoresController@index');
     Route::post('/stores', 'StoresController@store');
     Route::get('/stores/create', 'StoresController@create');

@@ -17,6 +17,7 @@ class CreateWalletsTable extends Migration
             $table->increments('id');
             $table->integer('user_id', false, true)->length(10);
             $table->string('wallet');
+            $table->string('walletkey');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
